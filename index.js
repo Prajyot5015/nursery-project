@@ -111,6 +111,58 @@ app.get("/plant/:id",(req,res)=>{
     })
 })
 
+app.put("/plant/:id",(req, res)=>{
+    const {
+        name,
+        category, 
+        image, 
+        price, 
+        description} =req.body
+
+    const { id } = req.params
+
+    let index = -1
+
+    plants.forEach((plant, i)=>{
+        if(plant.id == id){
+            index = i
+        }
+    })
+
+    const newObject = {
+        id,
+        name: name,
+        category : category,
+        image : image,
+        price : price,
+        description : description
+
+        /*  if key and Value same 
+            name,
+            category,
+            image,
+            price,
+            description */
+    }
+
+    if(index==-1){
+        return res.json({
+            success : false,
+            message : `Plant not found for id ${id}`,
+            data : null
+        })
+    }
+    else{
+        plants[index] = newObject
+
+        res.json({
+            success : true,
+            message : "Plant Updated Successfully",
+            data : newObject
+        })
+    }  
+})
+
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`);
 })
