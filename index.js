@@ -7,7 +7,7 @@ app.use(express.json())
 
 const plants = [
     {
-        "id": 503,
+        "id": 1,
         "name": "Mango",
         "category": "indoor",
         "image": "https://th.bing.com/th/id/OIP.LYPvC0O42rOv3XAdUaHo-gHaE8?rs=1&pid=ImgDetMain",
@@ -96,6 +96,18 @@ app.get("/plants", (req, res)=>{
         success : true,
         data : plants,
         message : "All Plants Fetched successfully"
+    })
+})
+
+app.get("/plant/:id",(req,res)=>{
+    const { id } = req.params
+
+    const plant = plants.find((p)=> p.id == id)
+
+    res.json({
+        success : plant ? true : false,
+        data : plant || null,
+        message : plant ? "Plant Fetched Successfully" : "Plant Not found"
     })
 })
 
