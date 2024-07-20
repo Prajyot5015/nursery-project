@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from "dotenv"
 dotenv.config()
+import mongoose from 'mongoose'
 
 import { getHealth } from './controllers/health.js'
 import { 
@@ -17,6 +18,19 @@ const app = express()
 
 const PORT = process.env.PORT
 app.use(express.json())
+
+const dbConnection = async ()=>{
+    const conn = await mongoose.connect(process.env.MONGODB_URL)
+
+    if(conn){
+        console.log("MongoDB Connected");
+    }
+    else{
+        console.log("MongoDB Not Connected");
+    }
+}
+dbConnection();
+
 
 app.get("/health", getHealth)
 app.post("/plant", postPlant )
