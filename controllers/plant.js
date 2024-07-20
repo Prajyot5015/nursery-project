@@ -1,84 +1,28 @@
+import Plant from "../models/Plant.js"
 
-const plants = [
-    {
-        "id": 1,
-        "name": "Mango",
-        "category": "indoor",
-        "image": "https://th.bing.com/th/id/OIP.LYPvC0O42rOv3XAdUaHo-gHaE8?rs=1&pid=ImgDetMain",
-        "price": 150,
-        "description": "Mango plant"
-    },
-    {
-        "id": 537,
-        "name": "Bamboo",
-        "category": "indoor",
-        "image": "https://th.bing.com/th/id/OIP.LYPvC0O42rOv3XAdUaHo-gHaE8?rs=1&pid=ImgDetMain",
-        "price": 150,
-        "description": "Bamboo plant"
-    }
-]
+const plants = []
 
-const postPlant = (req, res)=>{
+const postPlant = async (req, res)=>{
     const {
         name,
         category, 
         image, 
         price, 
         description} =req.body
-        
-        if(!name){
-          return  res.json({
-                success : false,
-                data : null,
-                message : "name is required"
-            })
-        }
-        
-        if(!category){
-            return  res.json({
-                  success : false,
-                  data : null,
-                  message : "category is required"
-              })
-          }
-          if(!image){
-            return  res.json({
-                  success : false,
-                  data : null,
-                  message : "image is required"
-              })
-          }
-          if(!price){
-            return  res.json({
-                  success : false,
-                  data : null,
-                  message : "price is required"
-              })
-          }
-          if(!description){
-            return  res.json({
-                  success : false,
-                  data : null,
-                  message : "description is required"
-              })
-          }
 
-        const randomId= Math.round(Math.random() * 1000)
+        const newPlant = new Plant({
+            name : name,
+            category : category,
+            image : image,
+            price : price,
+            description : description
+        })
 
-        const newPlant = {
-            id: randomId,
-            name: name,
-            category: category,
-            image: image,
-            price: price,
-            description: description
-        }
-
-        plants.push(newPlant)
+        const savedPlant = await newPlant.save();
 
         res.json({
             success : true,
-            data : newPlant,
+            data : savedPlant,
             message : "New Plant Added Successfully"
         })
 
