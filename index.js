@@ -20,7 +20,7 @@ const PORT = process.env.PORT
 app.use(express.json())
 
 const dbConnection = async ()=>{
-    const conn = await mongoose.connect(process.env.MONGODB_URL)
+    const conn = await mongoose.connect(process.env.MONGO_URL)
 
     if(conn){
         console.log("MongoDB Connected");
