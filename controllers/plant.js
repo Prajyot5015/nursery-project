@@ -39,10 +39,10 @@ const getPlant = async (req, res)=>{
     })
 }
 
-const getPlantId = (req,res)=>{
+const getPlantId = async (req,res)=>{
     const { id } = req.params
 
-    const plant = plants.find((p)=> p.id == id)
+    const plant = await Plant.findById( id )
 
     res.json({
         success : plant ? true : false,
