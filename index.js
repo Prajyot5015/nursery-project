@@ -26,6 +26,14 @@ const plants = [
     }
 ]
 
+app.get("/health",(req,res)=>{
+
+    res.json({
+        success : true,
+        message : "Server is running"
+    })
+})
+
 app.post("/plant", (req, res)=>{
     const {
         name,
