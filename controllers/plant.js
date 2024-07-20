@@ -1,6 +1,5 @@
 import Plant from "../models/Plant.js"
 
-const plants = []
 
 const postPlant = async (req, res) => {
     const {
@@ -81,26 +80,10 @@ const putPlantId = async (req, res) => {
         })
 }
 
-const deletePlantId = (req, res) => {
+const deletePlantId = async (req, res) => {
     const { id } = req.params
 
-    let index = -1
-
-    plants.forEach((plant, i) => {
-        if (plant.id == id) {
-            index = i
-        }
-    })
-
-    if (index == -1) {
-        return res.json({
-            success: false,
-            message: `Plant not found for id ${id}`,
-            data: null
-        })
-    }
-
-    plants.splice(index, 1)
+   await Plant.deleteOne({ _id : id })
 
     res.json({
         success: true,
