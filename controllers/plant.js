@@ -28,11 +28,13 @@ const postPlant = async (req, res)=>{
 
 }
 
-const getPlant = (req, res)=>{
+const getPlant = async (req, res)=>{
+
+    const allPlants = await Plant.find();
 
     res.json({
         success : true,
-        data : plants,
+        data : allPlants,
         message : "All Plants Fetched successfully"
     })
 }
